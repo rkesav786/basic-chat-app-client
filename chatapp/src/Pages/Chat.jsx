@@ -8,7 +8,9 @@ export const Chat = () => {
   const clientRef = useRef(null);
 
   useEffect(() => {
-    const client = new W3CWebSocket("ws://localhost:5000");
+    const client = new W3CWebSocket(
+      "ws://render.com/docs/web-services#port-binding"
+    );
     clientRef.current = client;
 
     client.onopen = () => console.log("✅ WebSocket Connected");
@@ -34,33 +36,53 @@ export const Chat = () => {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "20px auto", fontFamily: "Arial" }}>
-      <div style={{ height: "300px", overflowY: "auto", border: "1px solid black", padding: "10px", borderRadius: "5px" }}>
-      {messages.map((msg, index) => (
-  <div
-    key={index}
-    style={{
-      display: "flex",
-      justifyContent: msg.id === clientId ? "flex-end" : "flex-start", // ✅ Fix alignment
-      margin: "5px 0",
-    }}
-  >
     <div
-      style={{
-        background: msg.id === clientId ? "#DCF8C6" : "#EAEAEA",
-        padding: "8px 12px",
-        borderRadius: "10px",
-        maxWidth: "70%",
-      }}
+      style={{ maxWidth: "400px", margin: "20px auto", fontFamily: "Arial" }}
     >
-      {msg.text}
-    </div>
-  </div>
-))}
-
+      <div
+        style={{
+          height: "300px",
+          overflowY: "auto",
+          border: "1px solid black",
+          padding: "10px",
+          borderRadius: "5px",
+        }}
+      >
+        {messages.map((msg, index) => (
+          <div
+            key={index}
+            style={{
+              display: "flex",
+              justifyContent: msg.id === clientId ? "flex-end" : "flex-start", // ✅ Fix alignment
+              margin: "5px 0",
+            }}
+          >
+            <div
+              style={{
+                background: msg.id === clientId ? "#DCF8C6" : "#EAEAEA",
+                padding: "8px 12px",
+                borderRadius: "10px",
+                maxWidth: "70%",
+              }}
+            >
+              {msg.text}
+            </div>
+          </div>
+        ))}
       </div>
-      <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Type here" style={{ width: "80%", padding: "8px", marginTop: "10px" }} />
-      <button onClick={sendMessage} style={{ padding: "8px", marginLeft: "5px" }}>Send</button>
+      <input
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Type here"
+        style={{ width: "80%", padding: "8px", marginTop: "10px" }}
+      />
+      <button
+        onClick={sendMessage}
+        style={{ padding: "8px", marginLeft: "5px" }}
+      >
+        Send
+      </button>
     </div>
   );
 };
